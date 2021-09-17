@@ -1,0 +1,1 @@
+This repository contains my work for the Codeup Clustering module.
