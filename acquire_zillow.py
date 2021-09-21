@@ -1,4 +1,5 @@
 import pandas as pd
+import os
 
 from env import host, password, username
 
@@ -6,7 +7,7 @@ def get_db_url(db_name, username=username, hostname=host, password=password):
     """ Build an SQL query using env credentials """
     return f'mysql+pymysql://{username}:{password}@{hostname}/{db_name}'
 
-def zillow_clustering_acquire():
+def get_clustering_zillow():
     """ Acquire each table from Codeup database 'zillow' from 2017 with 
         one entry per parcel (latest transaction date) and no nulls in lat/long """
     # Build query
@@ -36,4 +37,11 @@ def zillow_clustering_acquire():
     # Drop duplicate-named 'id' columns
     df = df.drop(columns='id')
 
+    return df
+
+def pull_clustering_zillow():
+    if not os.path.isfile('fresh_zillow.csv'):
+        df = get_clustering_zillow()
+        df.to_csv('fresh_zillow.csv')
+    df = pd.read_csv('fresh_zillow.csv')
     return df
