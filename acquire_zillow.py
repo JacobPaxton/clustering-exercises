@@ -43,5 +43,5 @@ def pull_clustering_zillow():
     if not os.path.isfile('fresh_zillow.csv'):
         df = get_clustering_zillow()
         df.to_csv('fresh_zillow.csv')
-    df = pd.read_csv('fresh_zillow.csv')
+    df = pd.read_csv('fresh_zillow.csv', index_col=0)
     return df
